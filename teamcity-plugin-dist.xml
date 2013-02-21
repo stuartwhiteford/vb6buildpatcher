@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<teamcity-plugin xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:noNamespaceSchemaLocation="urn:shemas-jetbrains-com:teamcity-plugin-v1-xml">
+  <info>
+      <name>VB6BuildPatcher</name>
+      <display-name>VB6 Build Patcher</display-name>
+      <version>0.1.0</version>
+      <description>Update a Visual Basic 6 project file with a TeamCity build number.</description>
+      <vendor>
+          <name>OceanWeb Systems</name>
+          <url>http://www.oceanwebsystems.com/</url>
+      </vendor>
+  </info>
+  <deployment use-separate-classloader="true"/>
+</teamcity-plugin>

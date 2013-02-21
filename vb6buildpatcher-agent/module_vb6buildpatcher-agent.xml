@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_vb6buildpatcher-agent" default="compile.module.vb6buildpatcher-agent">
+    <dirname property="module.vb6buildpatcher-agent.basedir" file="/module_vb6buildpatcher-agent.xml"/>
+
+    <property name="module.jdk.home.vb6buildpatcher-agent" value="${jdk.home.1.6_(1)}"/>
+    <property name="module.jdk.bin.vb6buildpatcher-agent" value="${jdk.bin.1.6_(1)}"/>
+    <property name="module.jdk.classpath.vb6buildpatcher-agent" value="jdk.classpath.1.6_(1)"/>
+
+    <property name="compiler.args.vb6buildpatcher-agent" value="${compiler.args}"/>
+
+    <property name="vb6buildpatcher-agent.output.dir" value="vb6buildpatcher-agent/../out/production/vb6buildpatcher-agent"/>
+    <property name="vb6buildpatcher-agent.testoutput.dir" value="vb6buildpatcher-agent/../out/test/vb6buildpatcher-agent"/>
+
+    <path id="vb6buildpatcher-agent.module.bootclasspath">
+        <!-- Paths to be included in compilation bootclasspath -->
+    </path>
+
+    <path id="vb6buildpatcher-agent.module.production.classpath">
+        <path refid="${module.jdk.classpath.vb6buildpatcher-agent}"/>
+        <pathelement location="${vb6buildpatcher-common.output.dir}"/>
+        <pathelement location="C:/TeamCity/devPackage/server-api.jar"/>
+        <pathelement location="C:/TeamCity/devPackage/common-api.jar"/>
+        <pathelement location="C:/TeamCity/devPackage/agent-api.jar"/>
+        <path refid="library.teamcity_open_api_agent.classpath"/>
+        <path refid="library.teamcity_open_api_common.classpath"/>
+        <path refid="library.teamcity_third-party_common.classpath"/>
+    </path>
+
+    <path id="vb6buildpatcher-agent.runtime.production.module.classpath">
+        <pathelement location="${vb6buildpatcher-agent.output.dir}"/>
+        <path refid="vb6buildpatcher-common.runtime.production.module.classpath"/>
+        <path refid="library.teamcity_open_api_agent.classpath"/>
+        <path refid="library.teamcity_open_api_common.classpath"/>
+        <path refid="library.teamcity_third-party_common.classpath"/>
+    </path>
+
+    <path id="vb6buildpatcher-agent.module.classpath">
+        <path refid="${module.jdk.classpath.vb6buildpatcher-agent}"/>
+        <pathelement location="${vb6buildpatcher-agent.output.dir}"/>
+        <pathelement location="${vb6buildpatcher-common.testoutput.dir}"/>
+        <pathelement location="${vb6buildpatcher-common.output.dir}"/>
+        <pathelement location="C:/TeamCity/devPackage/server-api.jar"/>
+        <pathelement location="C:/TeamCity/devPackage/common-api.jar"/>
+        <pathelement location="C:/TeamCity/devPackage/agent-api.jar"/>
+        <path refid="library.teamcity_open_api_agent.classpath"/>
+        <path refid="library.teamcity_open_api_common.classpath"/>
+        <path refid="library.teamcity_third-party_common.classpath"/>
+    </path>
+
+    <path id="vb6buildpatcher-agent.runtime.module.classpath">
+        <pathelement location="${vb6buildpatcher-agent.testoutput.dir}"/>
+        <pathelement location="${vb6buildpatcher-agent.output.dir}"/>
+        <path refid="vb6buildpatcher-common.runtime.module.classpath"/>
+        <path refid="library.teamcity_open_api_agent.classpath"/>
+        <path refid="library.teamcity_open_api_common.classpath"/>
+        <path refid="library.teamcity_third-party_common.classpath"/>
+    </path>
+
+
+    <patternset id="excluded.from.module.vb6buildpatcher-agent">
+        <patternset refid="ignored.files"/>
+    </patternset>
+
+    <patternset id="excluded.from.compilation.vb6buildpatcher-agent">
+        <patternset refid="excluded.from.module.vb6buildpatcher-agent"/>
+    </patternset>
+
+    <path id="vb6buildpatcher-agent.module.sourcepath">
+        <dirset dir="vb6buildpatcher-agent">
+            <include name="src"/>
+        </dirset>
+    </path>
+
+
+    <target name="compile.module.vb6buildpatcher-agent" depends="compile.module.vb6buildpatcher-agent.production,compile.module.vb6buildpatcher-agent.tests" description="Compile module vb6Build-agent"/>
+
+    <target name="compile.module.vb6buildpatcher-agent.production" depends="register.custom.compilers,compile.module.vb6buildpatcher-common" description="Compile module vb6Build-agent; production classes">
+        <mkdir dir="${vb6buildpatcher-agent.output.dir}"/>
+        <javac2 destdir="${vb6buildpatcher-agent.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.vb6buildpatcher-agent}/javac">
+            <compilerarg line="${compiler.args.vb6buildpatcher-agent}"/>
+            <bootclasspath refid="vb6buildpatcher-agent.module.bootclasspath"/>
+            <classpath refid="vb6buildpatcher-agent.module.production.classpath"/>
+            <src refid="vb6buildpatcher-agent.module.sourcepath"/>
+            <patternset refid="excluded.from.compilation.vb6buildpatcher-agent"/>
+        </javac2>
+
+        <copy todir="${vb6buildpatcher-agent.output.dir}">
+            <fileset dir="vb6buildpatcher-agent/src">
+                <patternset refid="compiler.resources"/>
+                <type type="file"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="compile.module.vb6buildpatcher-agent.tests" depends="register.custom.compilers,compile.module.vb6buildpatcher-agent.production" description="compile module vb6Build-agent; test classes" unless="skip.tests"/>
+
+    <target name="clean.module.vb6buildpatcher-agent" description="cleanup module">
+        <delete dir="${vb6buildpatcher-agent.output.dir}"/>
+        <delete dir="${vb6buildpatcher-agent.testoutput.dir}"/>
+    </target>
+</project>

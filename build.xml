@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="vb6buildpatcher-build" default="dist" basedir=".">
+
+    <include file="vb6buildpatcher.xml"/>
+
+    <target name="_clean">
+        <delete dir="${basedir}/.idea_artifacts" quiet="true"/>
+    </target>
+
+    <target name="dist" depends="prepareVersion, vb6buildpatcher.artifact.plugin_dist">
+        <delete dir="${artifacts.temp.dir}"/>
+    </target>
+
+    <target name="prepareVersion">
+        <tstamp>
+            <format property="DATE_TIME" pattern="yyyyMMddHHmmss"/>
+        </tstamp>
+        <filter token="DATE_TIME" value="${DATE_TIME}"/>
+        <copy file="${basedir}/teamcity-plugin-dist.xml"
+              tofile="${basedir}/teamcity-plugin.xml"
+              overwrite="true"
+              filtering="true"/>
+    </target>
+
+</project>
